@@ -1,0 +1,646 @@
+{
+    "openapi": "3.0.3",
+    "info": {
+        "title": "desafio-pmweb",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://{url}:{port}/api/v1",
+            "variables": {
+                "url": {
+                    "default": "localhost"
+                },
+                "port": {
+                    "default": "3000"
+                }
+            }
+        }
+    ],
+    "tags": [
+        {
+            "name": "guests",
+            "description": "Todas as rotas relacionadas aos hóspedes"
+        },
+        {
+            "name": "bookings",
+            "description": "Todas as rotas relacionadas às reservas"
+        }
+    ],
+    "paths": {
+        "/guests": {
+            "get": {
+                "tags": ["guests"],
+                "summary": "Busca por todos os hóspedes",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "bookingId",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "pagination": {
+                                            "type": "object",
+                                            "properties": {
+                                                "page": {
+                                                    "type": "number"
+                                                },
+                                                "limit": {
+                                                    "type": "number"
+                                                },
+                                                "totalPages": {
+                                                    "type": "number"
+                                                },
+                                                "totalElements": {
+                                                    "type": "number"
+                                                }
+                                            }
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/Guest"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            },
+            "post": {
+                "tags": ["guests"],
+                "summary": "Cria um novo hóspede",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "birthdate": {
+                                        "type": "string"
+                                    },
+                                    "phoneNumber": {
+                                        "type": "string"
+                                    },
+                                    "city": {
+                                        "type": "string"
+                                    },
+                                    "state": {
+                                        "type": "string"
+                                    },
+                                    "country": {
+                                        "type": "string"
+                                    },
+                                    "bookingIds": {
+                                        "type": "array",
+                                        "items": {}
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Guest"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/guests/{guestId}": {
+            "get": {
+                "tags": ["guests"],
+                "summary": "Busca pelo hóspede com o ID especificado",
+                "parameters": [
+                    {
+                        "name": "guestId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Guest"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            },
+            "put": {
+                "tags": ["guests"],
+                "summary": "Atualiza o hóspede com o ID especificado",
+                "parameters": [
+                    {
+                        "name": "guestId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "birthdate": {
+                                        "type": "string"
+                                    },
+                                    "phoneNumber": {
+                                        "type": "string"
+                                    },
+                                    "city": {
+                                        "type": "string"
+                                    },
+                                    "state": {
+                                        "type": "string"
+                                    },
+                                    "country": {
+                                        "type": "string"
+                                    },
+                                    "bookingIds": {
+                                        "type": "array",
+                                        "items": {}
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Guest"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            },
+            "delete": {
+                "tags": ["guests"],
+                "summary": "Remove o hóspede com o ID especificado",
+                "parameters": [
+                    {
+                        "name": "guestId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/bookings": {
+            "get": {
+                "tags": ["bookings"],
+                "summary": "Busca por todas as reservas",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "guestId",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "pagination": {
+                                            "type": "object",
+                                            "properties": {
+                                                "page": {
+                                                    "type": "number"
+                                                },
+                                                "limit": {
+                                                    "type": "number"
+                                                },
+                                                "totalPages": {
+                                                    "type": "number"
+                                                },
+                                                "totalElements": {
+                                                    "type": "number"
+                                                }
+                                            }
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/Booking"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            },
+            "post": {
+                "tags": ["bookings"],
+                "summary": "Cria uma nova reserva",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "hotelName": {
+                                        "type": "string"
+                                    },
+                                    "roomNumber": {
+                                        "type": "number"
+                                    },
+                                    "price": {
+                                        "type": "number"
+                                    },
+                                    "bookingDate": {
+                                        "type": "string"
+                                    },
+                                    "startDate": {
+                                        "type": "string"
+                                    },
+                                    "endDate": {
+                                        "type": "string"
+                                    },
+                                    "status": {
+                                        "type": "string"
+                                    },
+                                    "guestIds": {
+                                        "type": "array",
+                                        "items": {}
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Booking"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/bookings/{bookingId}": {
+            "get": {
+                "tags": ["bookings"],
+                "summary": "Busca pela reserva com o ID especificado",
+                "parameters": [
+                    {
+                        "name": "bookingId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Booking"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            },
+            "put": {
+                "tags": ["bookings"],
+                "summary": "Atualiza a reserva com o ID especificado",
+                "parameters": [
+                    {
+                        "name": "bookingId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "hotelName": {
+                                        "type": "string"
+                                    },
+                                    "roomNumber": {
+                                        "type": "number"
+                                    },
+                                    "price": {
+                                        "type": "number"
+                                    },
+                                    "bookingDate": {
+                                        "type": "string"
+                                    },
+                                    "startDate": {
+                                        "type": "string"
+                                    },
+                                    "endDate": {
+                                        "type": "string"
+                                    },
+                                    "status": {
+                                        "type": "string"
+                                    },
+                                    "guestIds": {
+                                        "type": "array",
+                                        "items": {}
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Booking"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            },
+            "delete": {
+                "tags": ["bookings"],
+                "summary": "Remove a reserva com o ID especificado",
+                "parameters": [
+                    {
+                        "name": "bookingId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Guest": {
+                "type": "object",
+                "properties": {
+                    "_id": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "birthdate": {
+                        "type": "string"
+                    },
+                    "phoneNumber": {
+                        "type": "string"
+                    },
+                    "city": {
+                        "type": "string"
+                    },
+                    "state": {
+                        "type": "string"
+                    },
+                    "country": {
+                        "type": "string"
+                    },
+                    "bookingIds": {
+                        "type": "array",
+                        "items": {}
+                    },
+                    "createdAt": {
+                        "type": "string"
+                    },
+                    "updatedAt": {
+                        "type": "string"
+                    }
+                }
+            },
+            "Booking": {
+                "type": "object",
+                "properties": {
+                    "_id": {
+                        "type": "string"
+                    },
+                    "hotelName": {
+                        "type": "string"
+                    },
+                    "roomNumber": {
+                        "type": "number"
+                    },
+                    "price": {
+                        "type": "number"
+                    },
+                    "bookingDate": {
+                        "type": "string"
+                    },
+                    "startDate": {
+                        "type": "string"
+                    },
+                    "endDate": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "string"
+                    },
+                    "guestIds": {
+                        "type": "array",
+                        "items": {}
+                    },
+                    "createdAt": {
+                        "type": "string"
+                    },
+                    "updatedAt": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,28 @@
+{
+    "root": true,
+    "env": {
+        "es2022": true,
+        "node": true
+    },
+    "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/strict-type-checked",
+        "plugin:@typescript-eslint/stylistic-type-checked",
+        "prettier"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "project": "./tsconfig.json"
+    },
+    "plugins": ["@typescript-eslint"],
+    "rules": {
+        "no-unused-vars": "off",
+        "@typescript-eslint/no-unused-vars": "error"
+    },
+    "ignorePatterns": [
+        "__tests__/**/*",
+        "**/__mocks__/**/*",
+        "coverage/**/*",
+        "dist/**/*"
+    ]
+}

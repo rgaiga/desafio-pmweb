@@ -1,0 +1,23 @@
+services:
+    app:
+        build: ./
+        container_name: app
+        restart: always
+        ports:
+            - 3000:3000
+        environment:
+            NODE_ENV: production
+            SERVER_PORT: 3000
+            DATABASE_URI: mongodb://mongo:27017/pmweb
+        depends_on:
+            - mongo
+
+    mongo:
+        image: mongo:7.0.5-jammy
+        container_name: mongo
+        restart: always
+        volumes:
+            - mongo-data:/var/lib/mongo
+
+volumes:
+    mongo-data:
